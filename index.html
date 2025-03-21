@@ -58,7 +58,8 @@
 
         .header-bg {
             position: relative;
-            background: linear-gradient(rgba(24, 38, 176, 0.8), rgba(46, 55, 132, 0.8)), url('https://images.unsplash.com/photo-1516901076917-0cb0fa837938?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+            background: linear-gradient(rgba(24, 38, 176, 1), rgba(46, 55, 132, 1)),
+            url('https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6') center/cover no-repeat;
         }
 
         .header-bg::before {
@@ -68,13 +69,25 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(8, 18, 114, 0.5);
+            background: rgba(8, 18, 114, 0.8);
             z-index: 1;
+        }
+
+        .header-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6') center/cover no-repeat;
+            opacity: 0.1; /* Уменьшаем прозрачность */
+            z-index: 2;
         }
 
         .header-content {
             position: relative;
-            z-index: 2;
+            z-index: 3; /* Убедимся, что контент поверх изображений */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -343,7 +356,7 @@
                                         <li><a href="https://github.com/gorilla/mux" target="_blank">Gorilla Mux</a></li>
                                         <li><a href="https://github.com/stretchr/testify" target="_blank">Testify</a></li>
                                         <li><a href="https://github.com/go-resty/resty" target="_blank">Resty</a></li>
-                                        <li><a href="https://github.com/atol-online/fptr10" target="_blank">SDK FPTR10</a></li>
+                                        <li><a href="https://integration.atol.ru/api" target="_blank">SDK FPTR10</a></li>
                                     </ul>
                                 </div>
                             </span>
@@ -358,7 +371,7 @@
                                         <li><a href="https://github.com/apache/logging-log4j2" target="_blank">Log4j</a></li>
                                         <li><a href="https://github.com/FasterXML/jackson" target="_blank">Jackson</a></li>
                                         <li><a href="https://github.com/apache/httpcomponents-client" target="_blank">HttpClient</a></li>
-                                        <li><a href="https://github.com/atol-online/fptr10" target="_blank">SDK FPTR10</a></li>
+                                        <li><a href="https://integration.atol.ru/api" target="_blank">SDK FPTR10</a></li>
                                     </ul>
                                 </div>
                             </span>
