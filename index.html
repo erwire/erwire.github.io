@@ -1,11 +1,439 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Github Pages</title>
+    <title>Резюме - Егор Ишуткин</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #f0f2f5;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.3s ease-out forwards;
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title span {
+            position: relative;
+        }
+
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 40px;
+            height: 2px;
+            background: #4C59D8;
+            transition: width 0.3s ease;
+        }
+
+        .section-title:hover span::after {
+            width: 80px;
+        }
+
+        .header-bg {
+            position: relative;
+            background: linear-gradient(rgba(24, 38, 176, 0.8), rgba(46, 55, 132, 0.8)), url('https://images.unsplash.com/photo-1516901076917-0cb0fa837938?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+        }
+
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(8, 18, 114, 0.5);
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .section-box {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-box:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #717BD8;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.25rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #4C59D8;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        .skill-tag {
+            background: #4C59D8;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: #2E3784;
+        }
+
+        .framework-popup {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+            width: 300px;
+            background: #ffffff;
+            border: 1px solid #4C59D8;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .skill-tag:hover .framework-popup {
+            display: block;
+            opacity: 1;
+        }
+
+        .framework-popup::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -6px;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 6px solid #4C59D8;
+        }
+
+        .framework-popup a {
+            color: #1826B0;
+            text-decoration: underline;
+        }
+
+        .framework-popup a:hover {
+            color: #081272;
+        }
+
+        .collapsible input[type="checkbox"] {
+            display: none;
+        }
+
+        .collapsible label {
+            cursor: pointer;
+        }
+
+        .collapsible-content {
+            display: none;
+        }
+
+        .collapsible input[type="checkbox"]:checked ~ .collapsible-content {
+            display: block;
+        }
+
+        .collapsible label .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible input[type="checkbox"]:checked + label .toggle-icon {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
-<body>
-    <H1>Hello</H1>
+<body class="text-gray-800">
+<div class="container mx-auto max-w-4xl my-8 bg-white rounded-2xl shadow-xl overflow-hidden">
+    <!-- Header -->
+    <header class="header-bg text-white py-12 px-6">
+        <div class="header-content">
+            <img src="img/avatar.png" alt="Егор Ишуткин" class="w-32 h-32 rounded-full border-4 border-white shadow-lg animate-fadeInUp">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold animate-fadeInUp" style="animation-delay: 0.1s;">Егор Ишуткин</h1>
+                <h2 class="mt-2 text-xl opacity-90 animate-fadeInUp" style="animation-delay: 0.2s;">Go-разработчик</h2>
+                <p class="mt-2 text-sm flex justify-center items-center"><i class="fa-solid fa-map-marker-alt mr-2"></i>Москва, м. Планерная</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contact -->
+    <div class="bg-gray-100 text-gray-800 py-4 px-6">
+        <div class="flex flex-wrap justify-center gap-6">
+            <a href="tel:+79996131088" class="flex items-center text-sm hover:text-blue-600 transition-colors"><i class="fa-solid fa-phone mr-2"></i>+7 (999) 613-10-88</a>
+            <a href="mailto:erwire@yandex.ru" class="flex items-center text-sm hover:text-blue-600 transition-colors"><i class="fa-solid fa-envelope mr-2"></i>erwire@yandex.ru</a>
+            <a href="https://t.me/jahn_geor" target="_blank" class="flex items-center text-sm hover:text-blue-600 transition-colors"><i class="fa-brands fa-telegram mr-2"></i>Telegram</a>
+        </div>
+        <div class="flex justify-center gap-6 mt-2">
+            <a href="https://github.com/jahngeor" target="_blank" class="flex items-center text-sm hover:text-blue-600 transition-colors"><i class="fa-brands fa-github mr-2"></i>GitHub</a>
+            <a href="https://gitverse.ru/jg" target="_blank" class="flex items-center text-sm hover:text-blue-600 transition-colors"><i class="fa-solid fa-code mr-2"></i>GitVerse</a>
+        </div>
+    </div>
+
+    <!-- Sections -->
+    <main class="p-6 space-y-8">
+        <!-- About -->
+        <section class="section-box animate-fadeInUp collapsible" style="animation-delay: 0.3s;">
+            <input type="checkbox" id="collapse-about" checked>
+            <label for="collapse-about" class="section-title text-2xl font-semibold text-blue-700">
+                <span><i class="fa-solid fa-user mr-2"></i>О себе</span>
+                <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </label>
+            <div class="collapsible-content mt-4 space-y-4 text-gray-700">
+                <p>С 2022 года я погружён в мир backend-разработки, где разрабатываю и сопровождаю высоконагруженные системы и нахожу удовлетворение в решении сложных задач. Моя цель — создавать программное обеспечение, которое не только работает в соответствии с бизнес-требованиями, но и вдохновляет команды, упрощает жизнь клиентов и оставляет след в цифровом мире.</p>
+                <p>Моё профессиональное путешествие началось с изучения алгоритмов, а сегодня я проектирую микросервисы и API, которые становятся сердцем бизнес-процессов. Благодарность бизнеса и коллег — это то, что мотивирует меня двигаться вперёд. Я стремлюсь к гармонии между эффективностью кода, требованиями бизнеса и эстетикой в разработке.</p>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="section-box animate-fadeInUp collapsible" style="animation-delay: 0.4s;">
+            <input type="checkbox" id="collapse-experience" checked>
+            <label for="collapse-experience" class="section-title text-2xl font-semibold text-blue-700">
+                <span><i class="fa-solid fa-briefcase mr-2"></i>Опыт работы</span>
+                <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </label>
+            <div class="collapsible-content mt-4 timeline">
+                <div class="timeline-item">
+                    <h4 class="text-lg font-medium text-gray-800">Ведущий Backend-разработчик Go — ООО "МТС Диджитал"</h4>
+                    <p class="text-sm text-gray-500"><i class="fa-solid fa-calendar mr-2"></i>Сентябрь 2024 — настоящее время</p>
+                    <ul class="mt-2 text-gray-700 list-disc list-inside">
+                        <li>Разработка и оптимизация функционала для ПО "Garnet".</li>
+                        <li>Рефакторинг устаревшего кода для повышения производительности.</li>
+                        <li>Интеграция передовых технологий для устойчивости систем.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-lg font-medium text-gray-800">Программист-разработчик — Первый БИТ</h4>
+                    <p class="text-sm text-gray-500"><i class="fa-solid fa-calendar mr-2"></i>Октябрь 2022 — Сентябрь 2024 (2 года)</p>
+                    <ul class="mt-2 text-gray-700 list-disc list-inside">
+                        <li>Создание ПО для автоматизации бизнес-процессов с REST API и Go-микросервисами.</li>
+                        <li>Разработка интеграционных решений через NATS и ESB.</li>
+                        <li>Проектирование CLI-приложений и компонентов 1С на C++.</li>
+                        <li>Администрирование серверов и баз данных (Linux, Windows Server, Postgres, MSSQL).</li>
+                        <li>Наставничество для новых специалистов.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-lg font-medium text-gray-800">Разработчик — Проект Ticket Place</h4>
+                    <p class="text-sm text-gray-500"><i class="fa-solid fa-calendar mr-2"></i>2022 — настоящее время</p>
+                    <ul class="mt-2 text-gray-700 list-disc list-inside">
+                        <li>Разработка приложения-адаптера для CRM-системы Ticket Place.</li>
+                        <li>Интеграция с ККТ компании АТОЛ для автоматизации фискальных операций.</li>
+                        <li>Оптимизация взаимодействия между CRM и внешними устройствами.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="section-box animate-fadeInUp collapsible" style="animation-delay: 0.5s;">
+            <input type="checkbox" id="collapse-education" checked>
+            <label for="collapse-education" class="section-title text-2xl font-semibold text-blue-700">
+                <span><i class="fa-solid fa-graduation-cap mr-2"></i>Образование</span>
+                <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </label>
+            <div class="collapsible-content mt-4 space-y-6">
+                <div>
+                    <h4 class="text-lg font-medium text-gray-800">Высшее образование</h4>
+                    <div class="hover-scale mt-2">
+                        <p class="text-md text-gray-800">Бакалавр, Вычислительные машины, комплексы, системы и сети</p>
+                        <p class="text-sm text-gray-500"><i class="fa-solid fa-calendar mr-2"></i>РТУ МИРЭА, 2018 — 2022</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium text-gray-800">Курсы</h4>
+                    <div class="hover-scale mt-2">
+                        <p class="text-md text-gray-800">CISCO: Основы сетевых технологий (CCNA-1 и CCNA-2)</p>
+                        <p class="text-sm text-gray-500"><i class="fa-solid fa-calendar mr-2"></i>РТУ МИРЭА, 2021</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="section-box animate-fadeInUp collapsible" style="animation-delay: 0.6s;">
+            <input type="checkbox" id="collapse-skills" checked>
+            <label for="collapse-skills" class="section-title text-2xl font-semibold text-blue-700">
+                <span><i class="fa-solid fa-tools mr-2"></i>Навыки</span>
+                <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </label>
+            <div class="collapsible-content mt-4 space-y-4">
+                <div>
+                    <h4 class="text-lg font-medium text-gray-800">Языки программирования</h4>
+                    <div class="mt-2 flex flex-wrap gap-2">
+                            <span class="skill-tag">Go
+                                <div class="framework-popup">
+                                    <p class="font-medium text-blue-700">Фреймворки и библиотеки:</p>
+                                    <ul class="list-disc list-inside text-sm">
+                                        <li><a href="https://github.com/gin-gonic/gin" target="_blank">Gin</a></li>
+                                        <li><a href="https://github.com/gofiber/fiber" target="_blank">Fiber</a></li>
+                                        <li><a href="https://github.com/labstack/echo" target="_blank">Echo</a></li>
+                                        <li><a href="https://github.com/jackc/pgx" target="_blank">pgx</a></li>
+                                        <li><a href="https://github.com/Masterminds/squirrel" target="_blank">Squirrel</a></li>
+                                        <li><a href="https://github.com/go-chi/chi" target="_blank">Chi</a></li>
+                                        <li><a href="https://github.com/gorilla/mux" target="_blank">Gorilla Mux</a></li>
+                                        <li><a href="https://github.com/stretchr/testify" target="_blank">Testify</a></li>
+                                        <li><a href="https://github.com/go-resty/resty" target="_blank">Resty</a></li>
+                                        <li><a href="https://github.com/atol-online/fptr10" target="_blank">SDK FPTR10</a></li>
+                                    </ul>
+                                </div>
+                            </span>
+                        <span class="skill-tag">Java
+                                <div class="framework-popup">
+                                    <p class="font-medium text-blue-700">Фреймворки и библиотеки:</p>
+                                    <ul class="list-disc list-inside text-sm">
+                                        <li><a href="https://github.com/spring-projects/spring-boot" target="_blank">Spring Boot</a></li>
+                                        <li><a href="https://github.com/openjfx/openjfx" target="_blank">JavaFX</a></li>
+                                        <li><a href="https://github.com/hibernate/hibernate-orm" target="_blank">Hibernate</a></li>
+                                        <li><a href="https://github.com/apache/struts" target="_blank">Struts</a></li>
+                                        <li><a href="https://github.com/mybatis/mybatis-3" target="_blank">MyBatis</a></li>
+                                        <li><a href="https://github.com/junit-team/junit5" target="_blank">JUnit</a></li>
+                                        <li><a href="https://github.com/apache/logging-log4j2" target="_blank">Log4j</a></li>
+                                        <li><a href="https://github.com/FasterXML/jackson" target="_blank">Jackson</a></li>
+                                        <li><a href="https://github.com/apache/httpcomponents-client" target="_blank">HttpClient</a></li>
+                                        <li><a href="https://github.com/atol-online/fptr10" target="_blank">SDK FPTR10</a></li>
+                                    </ul>
+                                </div>
+                            </span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Bash</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium text-gray-800">Технологии и инструменты</h4>
+                    <div class="mt-2 flex flex-wrap gap-2">
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">NATS</span>
+                        <span class="skill-tag">gRPC</span>
+                        <span class="skill-tag">REST API</span>
+                        <span class="skill-tag">GraphQL</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MS SQL Server</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">CI/CD</span>
+                        <span class="skill-tag">Работа с ККТ</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium text-gray-800">Операционные системы</h4>
+                    <div class="mt-2 flex flex-wrap gap-2">
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Windows Server</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hobbies -->
+        <section class="section-box animate-fadeInUp collapsible" style="animation-delay: 0.7s;">
+            <input type="checkbox" id="collapse-hobbies" checked>
+            <label for="collapse-hobbies" class="section-title text-2xl font-semibold text-blue-700">
+                <span><i class="fa-solid fa-heart mr-2"></i>Увлечения</span>
+                <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </label>
+            <div class="collapsible-content mt-4 text-gray-700">
+                <ul class="list-disc list-inside">
+                    <li>Погружение в новые языки и технологии.</li>
+                    <li>Вклад в open-source сообщество.</li>
+                    <li>Чтение книг о коде и инновациях.</li>
+                    <li>Музыка на гитаре как способ перезагрузки.</li>
+                    <li>Путешествия, открывающие новые горизонты.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Languages -->
+        <section class="section-box animate-fadeInUp collapsible" style="animation-delay: 0.8s;">
+            <input type="checkbox" id="collapse-languages" checked>
+            <label for="collapse-languages" class="section-title text-2xl font-semibold text-blue-700">
+                <span><i class="fa-solid fa-language mr-2"></i>Языки</span>
+                <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </label>
+            <div class="collapsible-content mt-4 space-y-2 text-gray-700">
+                <div>
+                    <p><span class="mr-2">🇷🇺</span><span class="font-medium text-blue-700">Русский — Родной</span></p>
+                    <p class="text-sm ml-6">Свободное владение в профессиональной и повседневной среде.</p>
+                </div>
+                <div>
+                    <p><span class="mr-2">🇬🇧</span><span class="font-medium text-blue-700">Английский — B2</span></p>
+                    <p class="text-sm ml-6">Технические тексты, общение в проектах.</p>
+                </div>
+                <div>
+                    <p><span class="mr-2">🇩🇪</span><span class="font-medium text-blue-700">Немецкий — B1</span></p>
+                    <p class="text-sm ml-6">Базовые диалоги и документация.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
 </body>
 </html>
